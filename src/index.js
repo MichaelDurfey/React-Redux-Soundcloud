@@ -1,5 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { Provider } from 'react-redux';
+import configureStore from './stores/configureStore';
+import * as actions from './actions';
+import Stream from './components/Stream/index';
 
 const title = "hi there";
 const tracks = [
@@ -11,6 +15,14 @@ const tracks = [
   }
 ];
 
-ReactDOM.render(<div>{title}</div>, document.getElementById('app'));
+const store = configureStore();
+store.dispatch(actions.setTracks(tracks));
+
+ReactDOM.render(
+  <Provider store={store} >
+    <Stream />
+  </Provider>, 
+document.getElementById('app')
+);
 
 module.hot.accept();
